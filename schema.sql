@@ -1,7 +1,8 @@
 DROP TABLE IF exists countries ;
 
 CREATE TABLE countries (
-   country_id INT PRIMARY KEY,
+    id SERIAL primary key,
+    country_in varchar,
     country_name varchar
 );
     
@@ -13,18 +14,19 @@ FROM
 DROP TABLE IF exists movies ;
 
 CREATE TABLE movies (
-	netflixid INT PRIMARY KEY,
-	country_id INT REFERENCES countries(country_id),
+	id SERIAL primary key,
+	netflixid INT,
+	countryid INT REFERENCES countries(id),
 	title varchar,
 	image varchar,
 	synopsis varchar,
-	rating int,
+	rating float,
 	type varchar,
-	relased int,
+	released int,
 	runtime varchar,
 	largeimage varchar,
 	unogsdate date,
-	imbdid int,
+	imdbid varchar,
 	download varchar
 );
 
@@ -37,9 +39,10 @@ DROP TABLE IF exists genre ;
 
 CREATE TABLE genre (
 	id serial primary key,
- 	netflixid int REFERENCES movies(netflixid),
-	genre varchar,
- 	title varchar
+ 	netflixid int,
+    countryid INT REFERENCES countries(id),
+ 	title varchar,
+	genre varchar
  );
 
  SELECT 
