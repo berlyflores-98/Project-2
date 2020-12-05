@@ -1,2 +1,8 @@
-# Project-2
-Project 2
+## Welcome to Project 2
+
+Kiran Mundae  
+Samuel Fonseca 
+Charles Robinson 
+Kimberly Flores
+
+
