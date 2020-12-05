@@ -1,0 +1,14 @@
+.box {
+    height: 500px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    padding: 20px;
+    color: #fff;
+    background: rgb(197, 223, 231);
+  }
+
+  p {
+      color:red;
+  }
