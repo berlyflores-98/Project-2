@@ -20,55 +20,20 @@ var select_countries = ["Argentina","Australia","Belgium", "Brazil", "Canada","C
 "Hong Kong","Hungary","India","Italy","Israel","Japan","Malaysia","Mexico","Netherlands","Poland","Russia","Singapore",
 "Slovakia","South Africa","Spain","Sweden","Switzerland","Thailand","Turkey","United Kingdom","United States of America"];
 
+d3.json("/rating_country").then(function (ratings) {
+  var ratings = ratings;
+  d3.json("/latest_release").then(function (latest_movies) {
+
+    var latest_movies = latest_movies;
+
 d3.json(link).then((data) => {
 
 
     var countries = data;
   // console.log(countries);
 
-
-  function getRating(){
-   d3.json("/rating_country").then(function (ratings) {
-
-    var count_ratings = ratings;
   
-  });
-  return count_ratings;
-  }
-
-  function getMovies(){
-
-    d3.json("/latest_release").then(function (latest_movies) {
-
-      var latest_movies = latest_movies;
-      
-      })
-
-      return latest_movies;
-      
-  }
-
-
-  var latest_movies = getMovies();
-
-  d3.json("/genre_country", callback)
-
-  function callback(data) {
-    console.log(data);
-  };
-
-  // function getData() {
-  //   return d3.json("/genre_country", function() {})
-  // }
-  
-  // var data = getData();
-  
-  // console.log(data)
-
-  //console.log(genre);
   console.log(latest_movies);
-  console.log(count_ratings);
-  var count_ratings = getRating();
 
   var geojson;
 
@@ -97,13 +62,24 @@ d3.json(link).then((data) => {
          mouseout: resetHighlight,
       });
   }
-  
+  console.log(ratings);
 
      for (var i = 0; i < countries.features.length; i++) {
         if (select_countries.includes(countries.features[i].properties.ADMIN)){
-
-
-
+         
+          for(var j = 0; j < ratings.length; j++){
+            //console.log(ratings[0].countryName);
+            var country_name = ratings[j].countryName;
+            if (countries.features[i].properties.ADMIN === "United States of America"){
+              var country_name = "United States of America";
+            }
+            
+            if(countries.features[i].properties.ADMIN+" " === country_name || countries.features[i].properties.ADMIN === country_name ){
+              
+              var country_rating = ratings[j].countryRating;
+            }
+          }
+          
         geojson = L.geoJson(countries.features[i], {
             // Style each feature (in this case a neighborhood)
             style: function(feature) {
@@ -115,7 +91,9 @@ d3.json(link).then((data) => {
                 weight: 1.5
               };
             },onEachFeature: onEachFeature
-     }).bindPopup(`<h3>Name: ${countries.features[i].properties.ADMIN}</h3> <hr>`).addTo(map);
+     }).bindPopup(`<h3>${countries.features[i].properties.ADMIN}</h3> <hr>
+     <p>Average Movie Rating: ${country_rating}</p>`
+     ).addTo(map);
 
       
 
@@ -128,7 +106,16 @@ d3.json(link).then((data) => {
 
 
 
-// d3.json(link2).then((data) => {
+
+    })
+})
+
+  //console.log(genres);
+
+
+
+
+// d3.json("/rating_country").then((data) => {
 // function filterAPIResponse(key){
 //   var country = apiResponse.filter(countryName === key)
 //   if (country.length === 0){
@@ -137,7 +124,12 @@ d3.json(link).then((data) => {
 //   else{
 //     return country[0]['countryRating']
 //   }
+// },  onEachFeature
+
+
+//   function onEachFeature(feature){
+//   layer.on({
+//   'countryRating': filterAPIResponse(feature.countryRating)
+// });
 // }
-// onEachFeature (feature){
-//   'rating': filterAPIResponse(feature.properties.ADMIN)
-// }
+// })
