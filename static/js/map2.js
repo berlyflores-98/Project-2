@@ -24,13 +24,87 @@ d3.json(link).then((data) => {
 
 
     var countries = data;
-   console.log(countries);
+  // console.log(countries);
 
-    // var cleanData = [];
+
+  function getRating(){
+   d3.json("/rating_country").then(function (ratings) {
+
+    var count_ratings = ratings;
+  
+  });
+  return count_ratings;
+  }
+
+  function getMovies(){
+
+    d3.json("/latest_release").then(function (latest_movies) {
+
+      var latest_movies = latest_movies;
+      
+      })
+
+      return latest_movies;
+      
+  }
+
+
+  var latest_movies = getMovies();
+
+  d3.json("/genre_country", callback)
+
+  function callback(data) {
+    console.log(data);
+  };
+
+  // function getData() {
+  //   return d3.json("/genre_country", function() {})
+  // }
+  
+  // var data = getData();
+  
+  // console.log(data)
+
+  //console.log(genre);
+  console.log(latest_movies);
+  console.log(count_ratings);
+  var count_ratings = getRating();
+
+  var geojson;
+
+   function highlightFeature(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+  }
+
+  function resetHighlight(e) {
+    geojson.resetStyle(e.target);
+  }
+
+    function onEachFeature(feature, layer) {
+      layer.on({
+          mouseover: highlightFeature,
+         mouseout: resetHighlight,
+      });
+  }
+  
+
      for (var i = 0; i < countries.features.length; i++) {
         if (select_countries.includes(countries.features[i].properties.ADMIN)){
 
-        L.geoJson(countries.features[i], {
+
+
+        geojson = L.geoJson(countries.features[i], {
             // Style each feature (in this case a neighborhood)
             style: function(feature) {
               return {
@@ -40,12 +114,19 @@ d3.json(link).then((data) => {
                 fillOpacity: 0.5,
                 weight: 1.5
               };
-            },
-     }).addTo(map);
+            },onEachFeature: onEachFeature
+     }).bindPopup(`<h3>Name: ${countries.features[i].properties.ADMIN}</h3> <hr>`).addTo(map);
+
+      
+
 
     };
+
+
 }
 });
+
+
 
 // d3.json(link2).then((data) => {
 // function filterAPIResponse(key){
