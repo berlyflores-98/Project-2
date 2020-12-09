@@ -1,60 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>World Map</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
-    <style type="text/css">
-        .leaflet-container {
-            background-color: #c5e8ff;
-        }
-    </style>
+  <meta charset="utf-8">
+  <title>Geo JSON</title>
 
-    <!-- Leaflet JS & CSS
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" crossorigin=""></script> -->
-
-    <!-- d3 JavaScript
-    <script src="https://d3js.org/d3.v5.min.js"></script> -->
-
-    <!-- Our CSS
-    <link rel="stylesheet" type="text/css" href="static/css/style.css"> -->
-
+  <!-- Leaflet CSS & JS -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+  
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+ 
+  <!--D3 cdn-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
+ 
+  <!-- Our CSS -->
+  <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
 </head>
 
 <body>
-    <div id="map" style="width: 600px; height: 400px"></div>
+  <!-- The div where we will inject our map -->
+  <div id="map"></div>
 
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
-
-    <!-- API key
-    <script type="text/javascript" src="config.js"></script> -->
-
-    <!-- JS  -->
-    <!-- <script type="text/javascript" src="static/js/logic.js"></script>
-    <script type="text/javascript" src="static/js/logic2.js"></script>
-    <script type="text/javascript" src="static/js/logic3.js"></script> -->
-    <!-- <script type="text/javascript" src="static/js/map.js"></script> -->
-
-    <script>
-    var myGeoJSONPath = 'data/data.json';
-    var myCustomStyle = {
-    stroke: false,
-    fill: true,
-    fillColor: '#fff',
-    fillOpacity: 1
-    }
-    $.getJSON(myGeoJSONPath, function (data) {
-    var map = L.map('map').setView([39.74739, -105], 4);
-
-    L.geoJson(data, {
-    clickable: false,
-    style: myCustomStyle
-    }).addTo(map);
-    })
-    </script>
+  <!-- Our JS -->
+  <script type="text/javascript" src="config.js"></script>
+  <script type="text/javascript" src="static/js/map.js"></script>
 </body>
 
 </html>
