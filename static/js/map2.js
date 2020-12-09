@@ -14,7 +14,7 @@ var map = L.map("map", {
   
 
    var link = "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson";
-   var link2 =  
+  //  var link2 =  
 
 var select_countries = ["Argentina","Australia","Belgium", "Brazil", "Canada","Czech Republic","France","Germany","Greece",
 "Hong Kong","Hungary","India","Italy","Israel","Japan","Malaysia","Mexico","Netherlands","Poland","Russia","Singapore",
@@ -47,16 +47,16 @@ d3.json(link).then((data) => {
 }
 });
 
-d3.json(link2).then((data) => {
-function filterAPIResponse(key){
-  var country = apiResponse.filter(countryName === key)
-  if (country.length === 0){
-    return 0
-  }
-  else{
-    return country[0]['countryRating']
-  }
-}
-onEachFeature (feature){
-  'rating': filterAPIResponse(feature.properties.ADMIN)
-}
+// d3.json(link2).then((data) => {
+// function filterAPIResponse(key){
+//   var country = apiResponse.filter(countryName === key)
+//   if (country.length === 0){
+//     return 0
+//   }
+//   else{
+//     return country[0]['countryRating']
+//   }
+// }
+// onEachFeature (feature){
+//   'rating': filterAPIResponse(feature.properties.ADMIN)
+// }

@@ -20,9 +20,12 @@ engine = create_engine(url)
 def home():
     return(f"Welcome! <br>/latest_release <br>/rating_country <br>/genre_country")
 
+
+# Route for 
 @app.route("/map")
 def map():
-    return render_template('map.html')
+    return render_template('map2.html')
+
 
 @app.route("/latest_release")
 def latest_release():

@@ -134,3 +134,4 @@ dmypy.json
 
 # Passwords
 config.py
+config.js
