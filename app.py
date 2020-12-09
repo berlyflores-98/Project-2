@@ -5,6 +5,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 import numpy as np
 import pandas as pd
+import os
+import json
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
@@ -16,8 +18,11 @@ engine = create_engine(url)
 
 @app.route('/')
 def home():
-    
-    return(f"Welcome! <br> \n /top_releases")
+    return(f"Welcome! <br>/latest_release <br>/rating_country <br>/genre_country")
+
+@app.route("/map")
+def map():
+    return render_template('map.html')
 
 @app.route("/latest_release")
 def latest_release():
@@ -77,6 +82,13 @@ def genre_country():
         genre_list.append(genre_dict)
 
     return jsonify(genre_list)
+
+
+@app.route('/geometries')
+def geometries():
+    data = json.load(os.path.join('./static/data/countries.json'))
+    return jsonify(data)
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
