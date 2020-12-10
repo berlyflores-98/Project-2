@@ -79,7 +79,7 @@ d3.json(link).then((data) => {
               var country_rating = ratings[j].countryRating;
               var mov_total = 0;
             for (var k = 0; k < latest_movies.length; k++){
-              if(latest_movies[k].countryName+" " === country_name || latest_movies[k].countryName === country_name ){
+              if(latest_movies[k].countryName+" " === ratings[j].countryName || latest_movies[k].countryName === ratings[j].countryName ){
                 mov_total++;
               }
           }
