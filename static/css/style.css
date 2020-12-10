@@ -22,6 +22,6 @@ body {
     background: rgb(197, 223, 231);
   }
 
-  p {
+  .navbar {
       color:red;
   }
