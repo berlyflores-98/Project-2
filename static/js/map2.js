@@ -78,9 +78,13 @@ d3.json(link).then((data) => {
               
               var country_rating = ratings[j].countryRating;
               var mov_total = 0;
+              var mov_data =[];
             for (var k = 0; k < latest_movies.length; k++){
-              if(latest_movies[k].countryName+" " === ratings[j].countryName || latest_movies[k].countryName === ratings[j].countryName ){
+              if(latest_movies[k].countryName === ratings[j].countryName){
                 mov_total++;
+                mov_data.push({
+                  "title": latest_movies[k].title
+                })
               }
           }
 
@@ -99,11 +103,18 @@ d3.json(link).then((data) => {
                 weight: 1.5
               };
             },onEachFeature: onEachFeature
-     }).bindPopup(`<h5>${countries.features[i].properties.ADMIN}</h5> <hr>
-     <p>Average Movie Rating: ${country_rating}</p>
-     <p>Total Latest Releases: ${mov_total}</p>`
-     ).addTo(map);
+     }).bindPopup(movietitles()).addTo(map);
 
+      function movietitles(){
+        var html_data = ``;
+        html_data = `<h5>${countries.features[i].properties.ADMIN}</h5> <hr> <p>Average Movie Rating: ${country_rating}</p><p>Total Latest Releases: ${mov_total}</p><p><strong> Sample list of Latest Titles:</strong></p>`
+        for(var m=0;m<mov_data.length;m++){
+          if(m<5){
+            html_data += `<li>${mov_data[m].title}</li>`
+          }
+        }
+        return html_data;
+      }
       
 
 
