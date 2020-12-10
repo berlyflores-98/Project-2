@@ -8,7 +8,7 @@ var map = L.map("map", {
   L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
     maxZoom: 18,
-    id: "streets-v11",
+    id: "light-v10",
     accessToken: API_KEY
   }).addTo(map);
   
@@ -33,19 +33,22 @@ d3.json(link).then((data) => {
   // console.log(countries);
 
   
-  console.log(latest_movies);
+  //console.log(latest_movies);
 
   var geojson;
 
    function highlightFeature(e) {
     var layer = e.target;
-
     layer.setStyle({
-        weight: 5,
+        weight: 4,
         color: '#666',
         dashArray: '',
         fillOpacity: 0.7
-    });
+    })
+    layerPopup = L.popup()
+           .setLatLng(e.latlng)
+           .setContent(countryReleases(e))
+            .openOn(map);
 
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
@@ -62,7 +65,7 @@ d3.json(link).then((data) => {
          mouseout: resetHighlight,
       });
   }
-  console.log(ratings);
+  //console.log(ratings);
 
      for (var i = 0; i < countries.features.length; i++) {
         if (select_countries.includes(countries.features[i].properties.ADMIN)){
@@ -103,11 +106,30 @@ d3.json(link).then((data) => {
                 weight: 1.5
               };
             },onEachFeature: onEachFeature
-     }).bindPopup(movietitles()).addTo(map);
+     }).on('click', function(ev) {
+      releaseInfo(ev); // ev is an event object (MouseEvent in this case)
+  }).addTo(map);
 
-      function movietitles(){
+
+
+  function countryReleases(e){
+    var country_movie_total = 0
+    for (var p = 0; p < latest_movies.length; p++){
+      var country_count_name = e.sourceTarget.feature.properties.ADMIN;
+      if (e.sourceTarget.feature.properties.ADMIN === "United States of America"){
+        var country_count_name = "United States";
+      }
+      if(latest_movies[p].countryName === country_count_name||latest_movies[p].countryName === country_count_name+" "){
+        country_movie_total++;
+      }
+  }
+  var html_data = `<h5><strong>${e.sourceTarget.feature.properties.ADMIN}</strong></h5><hr> <p> Latest Releases: ${country_movie_total}</p>`;
+    return html_data;
+}
+
+      function releaseTitles(){
         var html_data = ``;
-        html_data = `<h5>${countries.features[i].properties.ADMIN}</h5> <hr> <p>Average Movie Rating: ${country_rating}</p><p>Total Latest Releases: ${mov_total}</p><p><strong> Sample list of Latest Titles:</strong></p>`
+        html_data = `<h5>${countries.features[i].properties.ADMIN}</h5><hr> `
         for(var m=0;m<mov_data.length;m++){
           if(m<5){
             html_data += `<li>${mov_data[m].title}</li>`
@@ -115,41 +137,64 @@ d3.json(link).then((data) => {
         }
         return html_data;
       }
-      
 
 
-    };
+      function releaseInfo(i){
+        
+        
+        //var click_country= i.layer.feature.properties.ADMIN;
+        if(select_countries.includes(i.layer.feature.properties.ADMIN)){
+          for(var j = 0; j < ratings.length; j++){
+            //console.log(ratings[0].countryName);
+            var country_name = ratings[j].countryName;
+            if (i.layer.feature.properties.ADMIN === "United States of America"){
+              var country_name = "United States of America";
+            }
+            
+            if(i.layer.feature.properties.ADMIN+" " === country_name || i.layer.feature.properties.ADMIN === country_name ){
+              
+              var country_rating = ratings[j].countryRating;
+              var mov_total = 0;
+              var mov_data =[];
+            for (var k = 0; k < latest_movies.length; k++){
+              if(latest_movies[k].countryName === ratings[j].countryName){
+                mov_total++;
+                mov_data.push({
+                  "title": latest_movies[k].title,
+                  "image": latest_movies[k].image
+                })
+              }
+          }
+          var html_data = `<h5 id = "movie_title"><strong>Latest Releases</strong></h5><p>${i.layer.feature.properties.ADMIN}'s Latest Releases</p><p>Average Movie Rating: ${country_rating}</p><p>Total Latest Releases: ${mov_total}</p><p><strong> Sample list of Latest Titles:</strong></p>`
+          for(var m=0;m<mov_data.length;m++){
+            if(m<8){
+              html_data += `<img src=${mov_data[m].image}" style="max-width:20%; max-height: auto; margin-right: 10px;margin-top: 10px" class="card-img-top center" >`
+            }
+          }     
+        }
+        
+      }
+      if(mov_total>0){
+        document.getElementById("movie info").innerHTML = html_data
+      }else{
+          document.getElementById("movie info").innerHTML = `<h5 id = "movie_title"><strong>Latest Releases</strong></h5><p>${i.layer.feature.properties.ADMIN} has no latest releases</p>`
+        }
+      }
+    }
+    // map.on('click', function(e) { 
+    //   console.log("World Map");
+    //   document.getElementById("movie info").innerHTML = ""
+
+    // })
+
 
 
 }
+     }
 });
 
 
 
 
     })
-})
-
-  //console.log(genres);
-
-
-
-
-// d3.json("/rating_country").then((data) => {
-// function filterAPIResponse(key){
-//   var country = apiResponse.filter(countryName === key)
-//   if (country.length === 0){
-//     return 0
-//   }
-//   else{
-//     return country[0]['countryRating']
-//   }
-// },  onEachFeature
-
-
-//   function onEachFeature(feature){
-//   layer.on({
-//   'countryRating': filterAPIResponse(feature.countryRating)
-// });
-// }
-// })
+});
