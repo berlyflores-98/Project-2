@@ -16,7 +16,18 @@ body {
     margin-left: 20px;
     margin-bottom: 20px;
     margin-right: 20px;
-    margin-top: 20px;
+    margin-top: 10px;
+    padding: 20px;
+    color: #fff;
+    background: rgb(197, 223, 231);
+  }
+
+  .box2 {
+    height: 500px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    margin-top: 75px;
     padding: 20px;
     color: #fff;
     background: rgb(197, 223, 231);
