@@ -77,8 +77,16 @@ d3.json(link).then((data) => {
             if(countries.features[i].properties.ADMIN+" " === country_name || countries.features[i].properties.ADMIN === country_name ){
               
               var country_rating = ratings[j].countryRating;
-            }
+              var mov_total = 0;
+            for (var k = 0; k < latest_movies.length; k++){
+              if(latest_movies[k].countryName+" " === country_name || latest_movies[k].countryName === country_name ){
+                mov_total++;
+              }
           }
+
+            }
+            
+        }
           
         geojson = L.geoJson(countries.features[i], {
             // Style each feature (in this case a neighborhood)
@@ -91,8 +99,9 @@ d3.json(link).then((data) => {
                 weight: 1.5
               };
             },onEachFeature: onEachFeature
-     }).bindPopup(`<h3>${countries.features[i].properties.ADMIN}</h3> <hr>
-     <p>Average Movie Rating: ${country_rating}</p>`
+     }).bindPopup(`<h5>${countries.features[i].properties.ADMIN}</h5> <hr>
+     <p>Average Movie Rating: ${country_rating}</p>
+     <p>Total Latest Releases: ${mov_total}</p>`
      ).addTo(map);
 
       
