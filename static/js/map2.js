@@ -1,7 +1,7 @@
 // Creating map object
 var map = L.map("map", {
-    center: [15.5994, -28.6731],
-    zoom: 1.5
+    center: [0,0],
+    zoom: 1.7
   });
   
   // Adding tile layer
@@ -262,8 +262,8 @@ d3.json(link).then((data) => {
 
 
   }
-      var width = 700,
-          height = 700;
+      var width = 800,
+          height = 800;
     
           
   function loadbubble(ev){

@@ -95,6 +95,12 @@ def geometries():
 @app.route('/repull_data')
 def data_pull_execution():
 
+    heroku_url = 'postgres://fdcftdhewdyqvh:28a4642cad69d69b6065c15fa11d97719397b94c0cfb460554560c80b81ce864@ec2-54-163-47-62.compute-1.amazonaws.com:5432/d15vhqvdffuqdg'
+    engine = create_engine(heroku_url)
+
+    engine.connect().execute("delete from genre")
+    engine.connect().execute("delete from movies")
+    engine.connect().execute("delete from countries")
 
 
     ### Pull List of Countries Available From Netflix API
@@ -112,12 +118,13 @@ def data_pull_execution():
     country_name_list = []
 
     for num, country in enumerate(country_response_json):
-        num_list.append(num)
+        num_list.append(num+1)
         country_list.append(country[1].upper())
         country_name_list.append(country[2])
     # Set your df
-    countries_df = pd.DataFrame({"country_in": country_list,
-                                "country_name": country_name_list})
+    countries_df = pd.DataFrame({"id": num_list,
+                            "country_in": country_list,
+                            "country_name": country_name_list})
 
     ### Iterate through List of Countries and Make API Calls to Obtain Latest Release for Each Country
     latest_release_responses = []
@@ -204,14 +211,12 @@ def data_pull_execution():
     countries_df.to_sql(name='countries', con=engine, if_exists='append', index=False)
     latest_release_df.to_sql(name='movies', con=engine, if_exists='append', index=False)
     genres_df.to_sql(name='genre', con=engine, if_exists='append', index=False)
-    
-    
 
-    ### Confirm data has been added by querying the tables
+    # ### Confirm data has been added by querying the tables
 
-    genre_df = pd.read_sql_query('select  c.country_name, genre.genre from genre join countries as c on genre.countryid = c.id order by c.country_name', con=engine)
-    genre_df['new_genre'] =  genre_df.genre.str.split(", ").str[0]
-    genre_df = genre_df.groupby(['country_name','new_genre']).count().reset_index()
+    # genre_df = pd.read_sql_query('select  c.country_name, genre.genre from genre join countries as c on genre.countryid = c.id order by c.country_name', con=engine)
+    # genre_df['new_genre'] =  genre_df.genre.str.split(", ").str[0]
+    # genre_df = genre_df.groupby(['country_name','new_genre']).count().reset_index()
     
     print("Pull is complete")
     
