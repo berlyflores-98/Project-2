@@ -18,7 +18,7 @@ This application creates visualizations based on data gathered by the API of uNo
 6.	Run Flask application app.py in bash/command window using python app.py command.
 7.	Open webpage by using http://localhost:5000.
 
-Heroku Deployment:
+## Heroku Deployment:
 https://netflix-project2.herokuapp.com/
 
 
