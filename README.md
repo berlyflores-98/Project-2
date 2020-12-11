@@ -1,4 +1,4 @@
-# Project 2 – Latest Releases on Netflix across the World
+# Project 2 – Latest Releases on Netflix Across the World
 
 ## Group Members
 - Samuel Fonseca 
