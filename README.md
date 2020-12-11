@@ -23,3 +23,4 @@ https://netflix-project2.herokuapp.com/
 
 
 
+![alt text](https://github.com/berlyflores-98/Project-2/blob/main/Relational%20Diagram.png)
