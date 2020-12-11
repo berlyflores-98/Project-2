@@ -1,10 +1,10 @@
 # Project 2 – Latest Releases on Netflix across the World
 
 ## Group Members
-Kiran Mundae  
-Samuel Fonseca 
-Charles Robinson 
-Kimberly Flores
+- Samuel Fonseca 
+- Charles Robinson
+- Kimberly Flores
+- Kiran Mundae
 
 ## Overview of Project:
 This application creates visualizations based on data gathered by the API of uNoGS (Unofficial Netflix Online Global Search). It allows the user to gain insight on the latest release (movies or shows) available globally in the last 7 days. The application shows the average rating and titles of the movies released in each country.
