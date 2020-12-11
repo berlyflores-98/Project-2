@@ -149,6 +149,8 @@
 
 //-----------------------------------------------------------------------------------------
 
+
+
 var width = 700,
   height = 700;
 
@@ -171,9 +173,79 @@ var simulation = d3
     })
   );
 
-var radiusScale = d3.scaleSqrt().domain([0, 100]).range([10, 80]);
+var radiusScale = d3.scaleSqrt().domain([0, 100]).range([15, 80]);
+
+
 
 d3.json("/genre_country").then(function (genres) {
+
+    function chooseColor(country) {
+        switch (country) {
+        case "Argentina ":
+          return "yellow";
+        case "Australia ":
+          return "red";
+        case "Belgium ":
+          return "orange";
+        case "Brazil ":
+          return "green";
+        case "Canada ":
+          return "purple";
+        case "Czech Republic ":
+          return "blue";
+        case "France ":
+          return "lime";
+        case "Germany ":
+          return "dodgerblue";
+        case "Greece ":
+          return "indigo";
+          case "Hong Kong ":
+          return "yellow";
+        case "Hungary ":
+          return "red";
+        case "India ":
+          return "orange";
+        case "Italy ":
+          return "green";
+        case "Israel ":
+          return "purple";
+        case "Japan ":
+          return "blue";
+        case "Malaysia ":
+          return "lime";
+        case "Mexico ":
+          return "navy";
+        case "Netherlands ":
+          return "indigo";
+        case "Poland ":
+          return "purple";
+        case "Russia":
+          return "fuchsia";
+        case "Singapore ":
+          return "green";
+        case "Slovakia ":
+          return "red";
+        case "South Africa":
+          return "navy";
+        case "Spain ":
+          return "blue";
+        case "Sweden ":
+          return "gold";
+        case "Switzerland ":
+          return "teal";
+        case "Thailand ":
+          return "silver";
+        case "Turkey ":
+          return "gray";
+        case "United Kingdom":
+          return "maroon";
+        case "United States":
+          return "orange";
+        default:
+          return "black";
+        }
+      }
+    console.log(genres);
   // For Dragging
 //   function dragstarted(d) {
 //     if (!d.active) simulation.alphaTarget(0.3).restart();
@@ -209,13 +281,16 @@ d3.json("/genre_country").then(function (genres) {
     .attr("r", function (d) {
       return radiusScale(d.genreCount);
     })
-    .attr("fill", "blue");
-
+    .attr("fill", function (d) {
+        return chooseColor(d.countryName)
+    });
+//console.log(d.countryName)
   var texts = textAndNodes
     .append("text")
-    .text(function (d) {
-      return `${d.genre}\n${d.genreCount}`;
-    })
+    .html(function (d) {
+        return "<tspan x='0' dy='0em'>" + d.countryName + "</tspan>" 
+             + "<tspan x='0' dy='1.2em'>" +`${d.genre}:${d.genreCount}` + "</tspan>";
+      })
     .style("fill", "white")
     .style("color", "white")
     .style("font-size", "8px")
@@ -229,3 +304,5 @@ d3.json("/genre_country").then(function (genres) {
     });
   }
 });
+
+

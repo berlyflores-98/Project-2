@@ -15,6 +15,7 @@ var map = L.map("map", {
 
    var link = "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson";
   //  var link2 =  
+  //d3.select(window).on("load", updateBubble);
 
 var select_countries = ["Argentina","Australia","Belgium", "Brazil", "Canada","Czech Republic","France","Germany","Greece",
 "Hong Kong","Hungary","India","Italy","Israel","Japan","Malaysia","Mexico","Netherlands","Poland","Russia","Singapore",
@@ -29,6 +30,73 @@ d3.json("/rating_country").then(function (ratings) {
 d3.json(link).then((data) => {
 
 
+  function chooseColor(country) {
+    switch (country) {
+    case "Argentina":
+      return "yellow";
+    case "Australia":
+      return "red";
+    case "Belgium":
+      return "orange";
+    case "Brazil":
+      return "green";
+    case "Canada":
+      return "purple";
+    case "Czech Republic":
+      return "blue";
+    case "France":
+      return "lime";
+    case "Germany":
+      return "dodgerblue";
+    case "Greece":
+      return "indigo";
+      case "Hong Kong":
+      return "yellow";
+    case "Hungary":
+      return "red";
+    case "India":
+      return "orange";
+    case "Italy":
+      return "green";
+    case "Israel":
+      return "purple";
+    case "Japan":
+      return "blue";
+    case "Malaysia":
+      return "lime";
+    case "Mexico":
+      return "navy";
+    case "Netherlands":
+      return "indigo";
+    case "Poland":
+      return "purple";
+    case "Russia":
+      return "fuchsia";
+    case "Singapore":
+      return "green";
+    case "Slovakia":
+      return "red";
+    case "South Africa":
+      return "navy";
+    case "Spain":
+      return "blue";
+    case "Sweden":
+      return "gold";
+    case "Switzerland":
+      return "teal";
+    case "Thailand":
+      return "silver";
+    case "Turkey":
+      return "gray";
+    case "United Kingdom":
+      return "maroon";
+    case "United States of America":
+      return "orange";
+    default:
+      return "black";
+    }
+  }
+
     var countries = data;
   // console.log(countries);
 
@@ -41,7 +109,6 @@ d3.json(link).then((data) => {
     var layer = e.target;
     layer.setStyle({
         weight: 4,
-        color: '#666',
         dashArray: '',
         fillOpacity: 0.7
     })
@@ -56,7 +123,16 @@ d3.json(link).then((data) => {
   }
 
   function resetHighlight(e) {
-    geojson.resetStyle(e.target);
+    //geojson.resetStyle(e.target);
+    var layer = e.target;
+    layer.setStyle({
+        color: "white",
+        fillColor: chooseColor(e.sourceTarget.feature.properties.ADMIN),
+        fillOpacity: 0.5,
+        weight: 1.5
+    })
+    layerPopup.remove();
+    
   }
 
     function onEachFeature(feature, layer) {
@@ -101,13 +177,16 @@ d3.json(link).then((data) => {
               return {
                 color: "white",
                 // Call the chooseColor function to decide which color to color our neighborhood (color based on borough)
-                fillColor: "green",
+                fillColor: chooseColor(countries.features[i].properties.ADMIN),
                 fillOpacity: 0.5,
                 weight: 1.5
               };
             },onEachFeature: onEachFeature
      }).on('click', function(ev) {
-      releaseInfo(ev); // ev is an event object (MouseEvent in this case)
+      releaseInfo(ev);
+      updateBubble(ev);
+     
+       // ev is an event object (MouseEvent in this case)
   }).addTo(map);
 
 
@@ -126,17 +205,6 @@ d3.json(link).then((data) => {
   var html_data = `<h5><strong>${e.sourceTarget.feature.properties.ADMIN}</strong></h5><hr> <p> Latest Releases: ${country_movie_total}</p>`;
     return html_data;
 }
-
-      function releaseTitles(){
-        var html_data = ``;
-        html_data = `<h5>${countries.features[i].properties.ADMIN}</h5><hr> `
-        for(var m=0;m<mov_data.length;m++){
-          if(m<5){
-            html_data += `<li>${mov_data[m].title}</li>`
-          }
-        }
-        return html_data;
-      }
 
 
       function releaseInfo(i){
@@ -187,14 +255,110 @@ d3.json(link).then((data) => {
 
     // })
 
+  function updateBubble(ev){
+    d3.select(".bubblebox").remove();
+    d3.select(".updatedbox").select("svg").remove();
+      loadbubble(ev);
+
+
+  }
+      var width = 700,
+          height = 700;
+    
+          
+  function loadbubble(ev){
+
+  var svg = d3
+    .selectAll(".updatedbox")
+    .append("svg")
+    .attr("height", height)
+    .attr("width", width)
+    .append("g")
+    .attr("transform", "translate(0,0)");
+  
+  var simulation = d3
+    .forceSimulation()
+    .force("x", d3.forceX(width / 2).strength(0.4))
+    .force("y", d3.forceY(height / 2).strength(0.4))
+    .force(
+      "collide",
+      d3.forceCollide(function (d) {
+        return radiusScale(d.genreCount) + 2;
+      })
+    );
+  
+  var radiusScale = d3.scaleSqrt().domain([0, 100]).range([10, 80]);
+  
+  
+  
+  d3.json("/genre_country").then(function (genres) {
+
+    var genre_data =[];
+        for (var n = 0; n < genres.length; n++){
+            var genre_country_name = genres[n].countryName;
+             
+            if (ev.layer.feature.properties.ADMIN === "United States of America"){
+                    var genre_country_name = "United States of America";
+            }
+              if(ev.layer.feature.properties.ADMIN+" " === genre_country_name||ev.layer.feature.properties.ADMIN === genre_country_name){
+                genre_data.push({
+                  "countryName": genres[n].countryName,
+                  "genre": genres[n].genre,
+                  "genreCount": genres[n].genreCount
+                })
+              }
+          }
+    
+    console.log(genre_data);
+  
+    var textAndNodes = svg
+      .append("g")
+      .selectAll("g")
+      .data(genre_data)
+      .enter()
+      .append("g");
+      // .call(drag);
+  
+    var circles = textAndNodes
+      .append("circle")
+      .attr("r", function (d) {
+        return radiusScale(d.genreCount);
+      })
+      .attr("fill", chooseColor(ev.layer.feature.properties.ADMIN));
+  
+    var texts = textAndNodes
+      .append("text")
+      .text(function (d) {
+        return `${d.genre}\n${d.genreCount}`;
+      })
+      .style("fill", "white")
+      .style("color", "white")
+      .style("font-size", "8px")
+      .style("text-anchor", "middle");
+  
+    simulation.nodes(genre_data).on("tick", ticked);
+  
+    function ticked() {
+      textAndNodes.attr("transform", function (d) {
+        return "translate(" + d.x + ", " + d.y + ")";
+      });
+    }
+  });
+    }
+  
+
 
 
 }
      }
 });
+  
+
 
 
 
 
     })
 });
+
+
