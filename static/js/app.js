@@ -55,9 +55,11 @@ d3.json("/genre_country").then(function (genres) {
         case "Greece ":
           return "indigo";
           case "Hong Kong ":
-          return "yellow";
+          return "orange";
         case "Hungary ":
           return "peru";
+        case "Iceland ":
+        return "indigo";
         case "India ":
           return "orange";
         case "Italy ":

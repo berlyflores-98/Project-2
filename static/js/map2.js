@@ -1,6 +1,6 @@
 // Creating map object
 var map = L.map("map", {
-    center: [40.737, -73.923],
+    center: [15.5994, -28.6731],
     zoom: 1.7
   });
   
@@ -18,8 +18,8 @@ var map = L.map("map", {
   //d3.select(window).on("load", updateBubble);
 
 var select_countries = ["Argentina","Australia","Belgium", "Brazil", "Canada","Czech Republic","France","Germany","Greece",
-"Hong Kong","Hungary","India","Italy","Israel","Japan","Malaysia","Mexico","Netherlands","Poland","Russia","Singapore",
-"Slovakia","South Africa","Spain","Sweden","Switzerland","Thailand","Turkey","United Kingdom","United States of America"];
+"Hong Kong S.A.R.","Hungary","India","Italy","Israel","Japan","Malaysia","Mexico","Netherlands","Poland","Russia","Singapore",
+"Slovakia","South Africa","Spain","Sweden","Switzerland","Thailand","Turkey","United Kingdom","United States of America", "Iceland"];
 
 d3.json("/rating_country").then(function (ratings) {
   var ratings = ratings;
@@ -50,10 +50,12 @@ d3.json(link).then((data) => {
       return "dodgerblue";
     case "Greece":
       return "indigo";
-      case "Hong Kong":
-      return "peru";
+    case "Hong Kong S.A.R.":
+      return "orange";
     case "Hungary":
       return "peru";
+    case "Iceland":
+        return "indigo";
     case "India":
       return "orange";
     case "Italy":
@@ -152,6 +154,9 @@ d3.json(link).then((data) => {
             if (countries.features[i].properties.ADMIN === "United States of America"){
               var country_name = "United States of America";
             }
+            if (countries.features[i].properties.ADMIN === "Hong Kong S.A.R."){
+              var country_name = "Hong Kong "
+            }
             
             if(countries.features[i].properties.ADMIN+" " === country_name || countries.features[i].properties.ADMIN === country_name ){
               
@@ -198,6 +203,9 @@ d3.json(link).then((data) => {
       if (e.sourceTarget.feature.properties.ADMIN === "United States of America"){
         var country_count_name = "United States";
       }
+      if (e.sourceTarget.feature.properties.ADMIN === "Hong Kong S.A.R."){
+        var country_count_name = "Hong Kong"
+      }
       if(latest_movies[p].countryName === country_count_name||latest_movies[p].countryName === country_count_name+" "){
         country_movie_total++;
       }
@@ -217,6 +225,9 @@ d3.json(link).then((data) => {
             var country_name = ratings[j].countryName;
             if (i.layer.feature.properties.ADMIN === "United States of America"){
               var country_name = "United States of America";
+            }
+            if (i.layer.feature.properties.ADMIN === "Hong Kong S.A.R."){
+              var country_name = "Hong Kong S.A.R."
             }
             
             if(i.layer.feature.properties.ADMIN+" " === country_name || i.layer.feature.properties.ADMIN === country_name ){
@@ -299,6 +310,9 @@ d3.json(link).then((data) => {
              
             if (ev.layer.feature.properties.ADMIN === "United States of America"){
                     var genre_country_name = "United States";
+            }
+            if (ev.layer.feature.properties.ADMIN === "Hong Kong S.A.R."){
+              var genre_country_name = "Hong Kong "
             }
               if(genre_country_name+" " === genres[n].countryName||genre_country_name === genres[n].countryName){
                 genre_data.push({
