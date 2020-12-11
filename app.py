@@ -95,6 +95,8 @@ def geometries():
 @app.route('/repull_data')
 def data_pull_execution():
 
+
+
     ### Pull List of Countries Available From Netflix API
     # Referenced URL
     url = "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi"
@@ -162,6 +164,23 @@ def data_pull_execution():
                 imdbid_list.append(response[j]['imdbid'])
                 download_list.append(response[j]['download'])
 
+    # Turn Lists into a Dataframe
+    latest_release_df = pd.DataFrame({"netflixid": netflixid_list,
+                                 "countryid": countryID_list,
+                                  "title": title_list,
+                                  "image": image_list,
+                                  "synopsis": synopsis_list,
+                                  "rating": rating_list,
+                                  "type": type_list,
+                                  "released": released_list,
+                                  "runtime": runtime_list,
+                                  "largeimage": largeimage_list,
+                                  "unogsdate": unogsdate_list,
+                                  "imdbid": imdbid_list,
+                                  "download": download_list
+                                 })
+    
+
     ### Pull Genre Information
     genre_list = []
 
@@ -185,13 +204,17 @@ def data_pull_execution():
     countries_df.to_sql(name='countries', con=engine, if_exists='append', index=False)
     latest_release_df.to_sql(name='movies', con=engine, if_exists='append', index=False)
     genres_df.to_sql(name='genre', con=engine, if_exists='append', index=False)
+    
+    
 
     ### Confirm data has been added by querying the tables
 
     genre_df = pd.read_sql_query('select  c.country_name, genre.genre from genre join countries as c on genre.countryid = c.id order by c.country_name', con=engine)
     genre_df['new_genre'] =  genre_df.genre.str.split(", ").str[0]
     genre_df = genre_df.groupby(['country_name','new_genre']).count().reset_index()
-
+    
+    print("Pull is complete")
+    
     return render_template('map2.html')
 
 if __name__ == '__main__':
