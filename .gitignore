@@ -64,6 +64,8 @@ db.sqlite3-journal
 # API Key
 config.py
 
+#req
+.DS_Store
 
 # Flask stuff:
 instance/
