@@ -1,6 +1,6 @@
 // Creating map object
 var map = L.map("map", {
-    center: [0,0],
+    center: [40.737, -73.923],
     zoom: 1.7
   });
   
@@ -51,7 +51,7 @@ d3.json(link).then((data) => {
     case "Greece":
       return "indigo";
       case "Hong Kong":
-      return "yellow";
+      return "peru";
     case "Hungary":
       return "peru";
     case "India":
