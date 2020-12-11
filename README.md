@@ -9,7 +9,7 @@
 ## Overview of Project:
 This application creates visualizations based on data gathered by the API of uNoGS (Unofficial Netflix Online Global Search). It allows the user to gain insight on the latest release (movies or shows) available globally in the last 7 days. The application shows the average rating and titles of the movies released in each country.
 
-## How to Re-create this Application:
+## How to Re-Create this Application:
 1.	Clone the repository to your computer.
 2.	Ensure all software requirements from the Requirements.txt are met prior to starting application.
 3.	Create database in Postgres SQL – need to create three tables by running schema.sql to be filled and queried.
