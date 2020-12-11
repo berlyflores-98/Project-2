@@ -33,7 +33,7 @@ d3.json(link).then((data) => {
   function chooseColor(country) {
     switch (country) {
     case "Argentina":
-      return "yellow";
+      return "darkgoldenrod";
     case "Australia":
       return "red";
     case "Belgium":
@@ -53,7 +53,7 @@ d3.json(link).then((data) => {
       case "Hong Kong":
       return "yellow";
     case "Hungary":
-      return "red";
+      return "peru";
     case "India":
       return "orange";
     case "Italy":
@@ -235,9 +235,9 @@ d3.json(link).then((data) => {
           }
           var html_data = `<h5 id = "movie_title"><strong>Latest Releases</strong></h5><p>${i.layer.feature.properties.ADMIN}'s Latest Releases</p><p>Average Movie Rating: ${country_rating}</p><p>Total Latest Releases: ${mov_total}</p><p><strong> Sample list of Latest Titles:</strong></p>`
           for(var m=0;m<mov_data.length;m++){
-            if(m<8){
-              html_data += `<img src=${mov_data[m].image}" style="max-width:20%; max-height: auto; margin-right: 10px;margin-top: 10px" class="card-img-top center" >`
-            }
+            
+              html_data += `<img src=${mov_data[m].image}" style="max-width:10%; max-height: auto; margin-right: 10px;margin-top: 10px" class="card-img-top center" >`
+            
           }     
         }
         
@@ -256,8 +256,8 @@ d3.json(link).then((data) => {
     // })
 
   function updateBubble(ev){
-    d3.select(".bubblebox").remove();
-    d3.select(".updatedbox").select("svg").remove();
+   // d3.select(".bubblebox").remove();
+    d3.select(".bubblebox").select("svg").remove();
       loadbubble(ev);
 
 
@@ -269,7 +269,7 @@ d3.json(link).then((data) => {
   function loadbubble(ev){
 
   var svg = d3
-    .selectAll(".updatedbox")
+    .selectAll(".bubblebox")
     .append("svg")
     .attr("height", height)
     .attr("width", width)
@@ -287,7 +287,7 @@ d3.json(link).then((data) => {
       })
     );
   
-  var radiusScale = d3.scaleSqrt().domain([0, 100]).range([10, 80]);
+  var radiusScale = d3.scaleSqrt().domain([0, 100]).range([30, 100]);
   
   
   
@@ -295,12 +295,12 @@ d3.json(link).then((data) => {
 
     var genre_data =[];
         for (var n = 0; n < genres.length; n++){
-            var genre_country_name = genres[n].countryName;
+            var genre_country_name = ev.layer.feature.properties.ADMIN;
              
             if (ev.layer.feature.properties.ADMIN === "United States of America"){
-                    var genre_country_name = "United States of America";
+                    var genre_country_name = "United States";
             }
-              if(ev.layer.feature.properties.ADMIN+" " === genre_country_name||ev.layer.feature.properties.ADMIN === genre_country_name){
+              if(genre_country_name+" " === genres[n].countryName||genre_country_name === genres[n].countryName){
                 genre_data.push({
                   "countryName": genres[n].countryName,
                   "genre": genres[n].genre,
@@ -328,12 +328,13 @@ d3.json(link).then((data) => {
   
     var texts = textAndNodes
       .append("text")
-      .text(function (d) {
-        return `${d.genre}\n${d.genreCount}`;
+      .html(function (d) {
+        return "<tspan x='0' dy='0em'>" + d.countryName + "</tspan>" 
+             + "<tspan x='0' dy='1.2em'>" +`${d.genre}:${d.genreCount}` + "</tspan>";
       })
       .style("fill", "white")
       .style("color", "white")
-      .style("font-size", "8px")
+      .style("font-size", "12px")
       .style("text-anchor", "middle");
   
     simulation.nodes(genre_data).on("tick", ticked);

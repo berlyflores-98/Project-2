@@ -173,7 +173,7 @@ var simulation = d3
     })
   );
 
-var radiusScale = d3.scaleSqrt().domain([0, 100]).range([15, 80]);
+var radiusScale = d3.scaleSqrt().domain([0, 100]).range([10, 80]);
 
 
 
@@ -182,7 +182,7 @@ d3.json("/genre_country").then(function (genres) {
     function chooseColor(country) {
         switch (country) {
         case "Argentina ":
-          return "yellow";
+          return "darkgoldenrod";
         case "Australia ":
           return "red";
         case "Belgium ":
@@ -202,7 +202,7 @@ d3.json("/genre_country").then(function (genres) {
           case "Hong Kong ":
           return "yellow";
         case "Hungary ":
-          return "red";
+          return "peru";
         case "India ":
           return "orange";
         case "Italy ":
