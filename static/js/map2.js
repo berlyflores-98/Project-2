@@ -310,14 +310,36 @@ d3.json(link).then((data) => {
           }
     
     console.log(genre_data);
+
+      // For Dragging
+  function dragstarted(d) {
+    if (!d.active) simulation.alphaTarget(0.3).restart();
+    d.subject.fx = d.subject.x;
+    d.subject.fy = d.subject.y;
+  }
+  function dragged(d) {
+    d.subject.fx = d.x;
+    d.subject.fy = d.y;
+  }
+  function dragended(d) {
+    if (!d.active) simulation.alphaTarget(0);
+    d.subject.fx = null;
+    d.subject.fy = null;
+  }
+
+  var drag = d3
+    .drag()
+    .on("start", dragstarted)
+    .on("drag", dragged)
+    .on("end", dragended);
   
     var textAndNodes = svg
       .append("g")
       .selectAll("g")
       .data(genre_data)
       .enter()
-      .append("g");
-      // .call(drag);
+      .append("g")
+      .call(drag);
   
     var circles = textAndNodes
       .append("circle")
