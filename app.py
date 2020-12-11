@@ -18,8 +18,8 @@ app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 
 # # # Database Set Up 
-# url = 'postgres://fdcftdhewdyqvh:28a4642cad69d69b6065c15fa11d97719397b94c0cfb460554560c80b81ce864@ec2-54-163-47-62.compute-1.amazonaws.com:5432/d15vhqvdffuqdg'
-# engine = create_engine(url)
+url = 'postgres://fdcftdhewdyqvh:28a4642cad69d69b6065c15fa11d97719397b94c0cfb460554560c80b81ce864@ec2-54-163-47-62.compute-1.amazonaws.com:5432/d15vhqvdffuqdg'
+engine = create_engine(url)
 
 
 @app.route('/')
