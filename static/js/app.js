@@ -306,3 +306,4 @@ d3.json("/genre_country").then(function (genres) {
 });
 
 
+console.log("testing");
