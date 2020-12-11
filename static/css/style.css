@@ -12,14 +12,13 @@ html {
 }
 
 .box {
-  height: 700px;
+  height: 500px;
   margin-left: 20px;
   margin-bottom: 20px;
   margin-right: 20px;
   margin-top: 10px;
   padding: 20px;
-  color: #fff;
-  background: rgb(197, 223, 231);
+  color:rgb(197, 223, 231);
 }
 
 
@@ -38,26 +37,37 @@ html {
 
 .box3 {
 
-  margin-left: 70px;
+  margin-left: 20px;
   margin-bottom: 20px;
   margin-right: 20px;
   margin-top: 75px;
   padding: 20px;
-  color: #fff;
-  background: rgb(197, 223, 231);
+  color:rgb(230, 230, 230);
+ 
 }
 
 .bubblebox {
-  height: 700px;
+  height: 500px;
   margin-left: 20px;
   margin-bottom: 20px;
   margin-right: 20px;
   margin-top: 20px;
   padding: 20px;
-  color: #fff;
-  background: rgb(197, 223, 231);
+}
+h3{
+  color:rgb(230, 230, 230);
+  font-size: x-large;
+  font-weight: bold;
+  text-align: left;
 }
 
-.navbar {
-    color:red;
+h1{
+  text-align: center;
+  color:rgb(184, 16, 16);
+
+}
+
+body{
+
+  background: rgb(80, 82, 83);
 }

@@ -1,7 +1,7 @@
 // Creating map object
 var map = L.map("map", {
     center: [15.5994, -28.6731],
-    zoom: 1.7
+    zoom: 1.5
   });
   
   // Adding tile layer
@@ -45,7 +45,7 @@ d3.json(link).then((data) => {
     case "Czech Republic":
       return "blue";
     case "France":
-      return "lime";
+      return "Crimson";
     case "Germany":
       return "dodgerblue";
     case "Greece":
@@ -65,7 +65,7 @@ d3.json(link).then((data) => {
     case "Japan":
       return "blue";
     case "Malaysia":
-      return "lime";
+      return "MediumOrchid";
     case "Mexico":
       return "navy";
     case "Netherlands":
@@ -87,7 +87,7 @@ d3.json(link).then((data) => {
     case "Switzerland":
       return "teal";
     case "Thailand":
-      return "silver";
+      return "LightCoral";
     case "Turkey":
       return "gray";
     case "United Kingdom":
@@ -273,8 +273,8 @@ d3.json(link).then((data) => {
 
 
   }
-      var width = 800,
-          height = 800;
+      var width = 500,
+          height = 500;
     
           
   function loadbubble(ev){
@@ -366,7 +366,7 @@ d3.json(link).then((data) => {
       .append("text")
       .html(function (d) {
         return "<tspan x='0' dy='0em'>" + d.countryName + "</tspan>" 
-             + "<tspan x='0' dy='1.2em'>" +`${d.genre}:${d.genreCount}` + "</tspan>";
+             + "<tspan x='0' dy='1.2em'>" +`${d.genre}: ${d.genreCount}` + "</tspan>";
       })
       .style("fill", "white")
       .style("color", "white")

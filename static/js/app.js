@@ -6,8 +6,8 @@
 
 
 
-var width = 700,
-  height = 700;
+var width = 500,
+  height = 500;
 
 var svg = d3
   .selectAll(".bubblebox")
@@ -49,7 +49,7 @@ d3.json("/genre_country").then(function (genres) {
         case "Czech Republic ":
           return "blue";
         case "France ":
-          return "lime";
+          return "Crimson";
         case "Germany ":
           return "dodgerblue";
         case "Greece ":
@@ -69,7 +69,7 @@ d3.json("/genre_country").then(function (genres) {
         case "Japan ":
           return "blue";
         case "Malaysia ":
-          return "lime";
+          return "MediumOrchid";
         case "Mexico ":
           return "navy";
         case "Netherlands ":
@@ -91,7 +91,7 @@ d3.json("/genre_country").then(function (genres) {
         case "Switzerland ":
           return "teal";
         case "Thailand ":
-          return "silver";
+          return "LightCoral";
         case "Turkey ":
           return "gray";
         case "United Kingdom":
@@ -146,7 +146,7 @@ d3.json("/genre_country").then(function (genres) {
     .append("text")
     .html(function (d) {
         return "<tspan x='0' dy='0em'>" + d.countryName + "</tspan>" 
-             + "<tspan x='0' dy='1.2em'>" +`${d.genre}:${d.genreCount}` + "</tspan>";
+             + "<tspan x='0' dy='1.2em'>" +`${d.genre}: ${d.genreCount}` + "</tspan>";
       })
     .style("fill", "white")
     .style("color", "white")
