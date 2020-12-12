@@ -45,5 +45,5 @@ D3-drag:
 https://github.com/d3/d3-drag
 
 Youtube Tutorial Videos:
-https://www.youtube.com/watch?v=NTS7uXOxQeM&t=111s
-https://www.youtube.com/watch?v=y2-sgZh49dQ
+-https://www.youtube.com/watch?v=NTS7uXOxQeM&t=111s
+-https://www.youtube.com/watch?v=y2-sgZh49dQ
