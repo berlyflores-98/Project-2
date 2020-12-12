@@ -24,3 +24,26 @@ https://netflix-project2.herokuapp.com/
 
 
 ![alt text](https://github.com/berlyflores-98/Project-2/blob/main/Relational%20Diagram.png)
+
+## Sources:
+Netflix API Data:
+https://unogs.com/
+
+Leaflet Map:
+https://unpkg.com/leaflet@1.6.0/dist/leaflet.js
+
+GeoJSON:
+https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson
+
+D3-force:
+https://github.com/d3/d3-force
+
+Nodes:
+https://nodejs.org/en/download/
+ 
+D3-drag:
+https://github.com/d3/d3-drag
+
+Youtube Tutorial Videos:
+https://www.youtube.com/watch?v=NTS7uXOxQeM&t=111s
+https://www.youtube.com/watch?v=y2-sgZh49dQ
